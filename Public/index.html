@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ElevateMind — Your holistic space for professional growth and mental clarity." />
+  <meta name="theme-color" content="#4f46e5" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ElevateMind | Career & Wellness Portal" />
+  <meta property="og:description" content="Career guidance, mood tracking, and 1-on-1 coaching — all in one place." />
+  <meta property="og:type" content="website" />
+
+  <title>ElevateMind | Career &amp; Wellness Portal</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Toast Notifications Container -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Mobile Hamburger -->
+  <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+      <div class="sidebar-header">
+        <h2 class="logo">Elevate<span>Mind</span></h2>
+        <p class="logo-tagline">Growth &amp; Wellness</p>
+      </div>
+      <nav>
+        <button class="nav-btn active" data-target="dashboard" aria-current="page">
+          <span class="nav-icon">🏠</span> Dashboard
+        </button>
+        <button class="nav-btn" data-target="career">
+          <span class="nav-icon">🧭</span> Career Compass
+        </button>
+        <button class="nav-btn" data-target="wellness">
+          <span class="nav-icon">🧠</span> Mind Wellness
+        </button>
+        <button class="nav-btn" data-target="booking">
+          <span class="nav-icon">📅</span> Book a Session
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <p>v2.0.0 &bull; Made with ❤️</p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-content">
+
+      <!-- ═══════════════ DASHBOARD ═══════════════ -->
+      <section id="dashboard" class="tab-content active" aria-label="Dashboard">
+        <header class="page-header">
+          <div>
+            <h1>Welcome to ElevateMind 👋</h1>
+            <p class="subtitle">Your holistic space for professional growth and mental clarity.</p>
+          </div>
+          <div id="greeting-badge" class="badge badge--primary"></div>
+        </header>
+
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="stat-number" id="stat-moods">—</span>
+            <span class="stat-label">Mood Logs</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="stat-bookings">—</span>
+            <span class="stat-label">Sessions Booked</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">∞</span>
+            <span class="stat-label">Potential</span>
+          </div>
+        </div>
+
+        <div class="cards-grid">
+          <div class="card card--hover" role="article">
+            <div class="card-icon">🎯</div>
+            <h3>Career Clarity</h3>
+            <p>Discover roles aligned with your unique strengths and personality type.</p>
+            <button class="btn btn--primary" onclick="switchTab('career')">Take Assessment →</button>
+          </div>
+          <div class="card card--hover" role="article">
+            <div class="card-icon">🌿</div>
+            <h3>Mental Wellness</h3>
+            <p>Track your daily mood, journal reflections, and practice guided breathing.</p>
+            <button class="btn btn--primary" onclick="switchTab('wellness')">Check In Now →</button>
+          </div>
+          <div class="card card--hover" role="article">
+            <div class="card-icon">🤝</div>
+            <h3>1-on-1 Guidance</h3>
+            <p>Speak with certified career coaches or mental health counselors.</p>
+            <button class="btn btn--primary" onclick="switchTab('booking')">Schedule Call →</button>
+          </div>
+        </div>
+
+        <!-- Motivational Quote -->
+        <div class="quote-card" id="quote-card" aria-live="polite">
+          <blockquote id="daily-quote">Loading inspiration…</blockquote>
+          <button class="btn btn--ghost btn--sm" id="new-quote-btn">New Quote ✨</button>
+        </div>
+      </section>
+
+      <!-- ═══════════════ CAREER ═══════════════ -->
+      <section id="career" class="tab-content" aria-label="Career Assessment">
+        <header class="page-header">
+          <div>
+            <h1>Career Compass 🧭</h1>
+            <p class="subtitle">Answer a few questions to discover your ideal career track.</p>
+          </div>
+          <div class="badge badge--info">5 Questions</div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-wrap" aria-label="Assessment progress">
+          <div class="progress-bar" id="career-progress" style="width: 0%"></div>
+        </div>
+
+        <form id="career-form" class="card" novalidate>
+          <div class="question" data-q="1">
+            <label for="q1">1. What type of tasks energize you the most?</label>
+            <div class="option-grid" id="q1-options">
+              <label class="option-card"><input type="radio" name="q1" value="tech" required /><span>💻 Solving logical puzzles, coding, or analyzing data</span></label>
+              <label class="option-card"><input type="radio" name="q1" value="creative" /><span>🎨 Designing visuals, writing, or brainstorming ideas</span></label>
+              <label class="option-card"><input type="radio" name="q1" value="people" /><span>🤝 Helping, mentoring, or understanding others</span></label>
+              <label class="option-card"><input type="radio" name="q1" value="business" /><span>📈 Leading projects, negotiating, and strategizing</span></label>
+            </div>
+          </div>
+
+          <div class="question" data-q="2">
+            <label for="q2">2. In a team project, which role do you naturally take?</label>
+            <div class="option-grid" id="q2-options">
+              <label class="option-card"><input type="radio" name="q2" value="tech" required /><span>🔧 The builder / technical problem solver</span></label>
+              <label class="option-card"><input type="radio" name="q2" value="creative" /><span>💡 The visionary / designer</span></label>
+              <label class="option-card"><input type="radio" name="q2" value="people" /><span>🕊️ The mediator / team supporter</span></label>
+              <label class="option-card"><input type="radio" name="q2" value="business" /><span>🏆 The organizer / decision maker</span></label>
+            </div>
+          </div>
+
+          <div class="question" data-q="3">
+            <label>3. What kind of work environment do you prefer?</label>
+            <div class="option-grid">
+              <label class="option-card"><input type="radio" name="q3" value="tech" required /><span>⚙️ Deep focus with cutting-edge tools</span></label>
+              <label class="option-card"><input type="radio" name="q3" value="creative" /><span>🖼️ Flexible, expressive, and aesthetics-driven</span></label>
+              <label class="option-card"><input type="radio" name="q3" value="people" /><span>🌏 Collaborative, empathetic, and community-focused</span></label>
+              <label class="option-card"><input type="radio" name="q3" value="business" /><span>🚀 Fast-paced, goal-oriented, and competitive</span></label>
+            </div>
+          </div>
+
+          <div class="question" data-q="4">
+            <label>4. Which subject interests you the most?</label>
+            <div class="option-grid">
+              <label class="option-card"><input type="radio" name="q4" value="tech" required /><span>🤖 Mathematics, AI &amp; Computer Science</span></label>
+              <label class="option-card"><input type="radio" name="q4" value="creative" /><span>🎭 Arts, Literature &amp; Performing Arts</span></label>
+              <label class="option-card"><input type="radio" name="q4" value="people" /><span>🧬 Psychology, Sociology &amp; Life Sciences</span></label>
+              <label class="option-card"><input type="radio" name="q4" value="business" /><span>📊 Economics, Business &amp; Political Science</span></label>
+            </div>
+          </div>
+
+          <div class="question" data-q="5">
+            <label>5. What is your primary career goal?</label>
+            <div class="option-grid">
+              <label class="option-card"><input type="radio" name="q5" value="tech" required /><span>🔬 Innovate through technology</span></label>
+              <label class="option-card"><input type="radio" name="q5" value="creative" /><span>✨ Create meaningful art and experiences</span></label>
+              <label class="option-card"><input type="radio" name="q5" value="people" /><span>💚 Make a positive social impact</span></label>
+              <label class="option-card"><input type="radio" name="q5" value="business" /><span>💼 Build and lead successful ventures</span></label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--lg" id="career-submit-btn">
+            <span>Get My Career Recommendations</span>
+            <span class="spinner hidden" aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <!-- Career Result -->
+        <div id="career-result" class="card result-card hidden" aria-live="polite"></div>
+      </section>
+
+      <!-- ═══════════════ WELLNESS ═══════════════ -->
+      <section id="wellness" class="tab-content" aria-label="Mind Wellness">
+        <header class="page-header">
+          <h1>Mind Wellness Center 🧠</h1>
+          <p class="subtitle">Track your mood, journal your thoughts, and practice breathing.</p>
+        </header>
+
+        <div class="wellness-grid">
+          <!-- Mood Tracker -->
+          <div class="card">
+            <h3>Daily Mood Check-In</h3>
+            <form id="mood-form" novalidate>
+              <label for="mood-select">How are you feeling today?</label>
+              <div class="mood-emoji-grid" id="mood-emoji-grid" role="radiogroup" aria-label="Select your mood">
+                <label class="mood-chip"><input type="radio" name="mood" value="Energized" /><span>😄</span><small>Energized</small></label>
+                <label class="mood-chip"><input type="radio" name="mood" value="Happy" /><span>😊</span><small>Happy</small></label>
+                <label class="mood-chip"><input type="radio" name="mood" value="Calm" /><span>🙂</span><small>Calm</small></label>
+                <label class="mood-chip"><input type="radio" name="mood" value="Focused" /><span>🎯</span><small>Focused</small></label>
+                <label class="mood-chip"><input type="radio" name="mood" value="Stressed" /><span>😟</span><small>Stressed</small></label>
+                <label class="mood-chip"><input type="radio" name="mood" value="Anxious" /><span>😰</span><small>Anxious</small></label>
+                <label class="mood-chip"><input type="radio" name="mood" value="Overwhelmed" /><span>😣</span><small>Overwhelmed</small></label>
+                <label class="mood-chip"><input type="radio" name="mood" value="Sad" /><span>😢</span><small>Sad</small></label>
+              </div>
+              <label for="mood-note" style="margin-top: 1rem;">Journal Note / Reflection</label>
+              <textarea id="mood-note" name="note" rows="3" placeholder="Write down what's on your mind… (optional)" maxlength="1000"></textarea>
+              <div class="char-count"><span id="note-char">0</span>/1000</div>
+              <button type="submit" class="btn btn--primary" id="mood-submit-btn">
+                <span>Log Mood</span>
+                <span class="spinner hidden" aria-hidden="true"></span>
+              </button>
+            </form>
+
+            <div class="mood-history">
+              <h4>Recent Reflections</h4>
+              <ul id="mood-list" class="log-list" aria-label="Mood log history"></ul>
+            </div>
+          </div>
+
+          <!-- Breathing Tool -->
+          <div class="card center-text">
+            <h3>Guided Breathing 🌬️</h3>
+            <p class="subtitle">Follow the circle to regulate your nervous system.</p>
+            <div class="breathing-circle" id="breath-circle" aria-label="Breathing exercise circle">Ready</div>
+            <p class="breath-phase" id="breath-phase"></p>
+            <button class="btn btn--primary" id="breath-btn">Start Exercise</button>
+            <div class="breath-count-wrap">
+              <span>Cycles: <strong id="breath-count">0</strong></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════ BOOKING ═══════════════ -->
+      <section id="booking" class="tab-content" aria-label="Book a Session">
+        <header class="page-header">
+          <div>
+            <h1>Book a 1-on-1 Session 📅</h1>
+            <p class="subtitle">Connect with expert coaches and counselors.</p>
+          </div>
+        </header>
+
+        <div class="wellness-grid">
+          <form id="booking-form" class="card" novalidate>
+            <h3>Session Details</h3>
+            <label for="book-name">Your Full Name</label>
+            <input type="text" id="book-name" name="name" required placeholder="Jane Doe" autocomplete="name" />
+            <span class="field-error" id="err-name"></span>
+
+            <label for="book-email">Email Address</label>
+            <input type="email" id="book-email" name="email" required placeholder="jane@example.com" autocomplete="email" />
+            <span class="field-error" id="err-email"></span>
+
+            <label for="book-type">Session Type</label>
+            <select id="book-type" name="type" required>
+              <option value="" disabled selected>Choose a session type…</option>
+              <option value="Career Counselling">🧭 Career Counselling &amp; Resume Review</option>
+              <option value="Mind Wellness Therapy">🧘 Mind Wellness &amp; Stress Management</option>
+              <option value="Resume Review">📄 Resume Review Only</option>
+              <option value="Interview Prep">🎤 Interview Preparation</option>
+              <option value="Stress Management">💆 Stress Management Coaching</option>
+            </select>
+            <span class="field-error" id="err-type"></span>
+
+            <label for="book-date">Preferred Date</label>
+            <input type="date" id="book-date" name="date" required />
+            <span class="field-error" id="err-date"></span>
+
+            <button type="submit" class="btn btn--primary btn--lg" id="booking-submit-btn">
+              <span>Confirm Booking</span>
+              <span class="spinner hidden" aria-hidden="true"></span>
+            </button>
+          </form>
+
+          <div class="card">
+            <h3>Your Upcoming Sessions</h3>
+            <ul id="booking-list" class="log-list" aria-label="Upcoming session bookings"></ul>
+            <p id="no-bookings-msg" class="empty-msg">No bookings yet. Book your first session! 🌟</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
